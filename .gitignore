@@ -1,4 +1,4 @@
 node_modules/*
 scraped_files/*
 assets/*
-marketBuy.js
+marketData.js

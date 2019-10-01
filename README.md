@@ -8,6 +8,6 @@ Any tips, advice or feedback is much appreciated.
 
 This scraper was built to extract the information I needed from a particular website:
 
-"https:\\www.lifeisfeudal.com"
+"www.lifeisfeudal.com"
 
 However can be modified to use on other sites, I would like it to become dynamic at some point.
