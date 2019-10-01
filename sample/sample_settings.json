@@ -1,0 +1,9 @@
+{
+    "email": "INSERT_YOUR_EMAIL_OR_USERNAME",
+    "password": "INSERT_YOUR_PASSWORD",
+    "character": "INSERT_CHARACTER_NAME",
+    "URL": {
+        "Login": "INSERT_URL_FOR_LOGGING_IN",
+        "ANOTHER URL": "INSERT_URL"
+    }
+}
