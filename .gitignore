@@ -1,0 +1,4 @@
+node_modules/*
+scraped_files/*
+assets/*
+marketBuy
