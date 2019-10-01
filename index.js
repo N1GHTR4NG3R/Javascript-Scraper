@@ -1,5 +1,4 @@
 // Required modules
-const request = require("request-promise");
 const cheerio = require("cheerio");
 const puppeteer = require("puppeteer");
 const settings = require("./assets/settings.json");
@@ -20,7 +19,7 @@ async function marketPage(browser, page){
     const salesApi = await page.content();
     const $ = cheerio.load(salesApi);
     const salesStr = $('body > pre').text();
-    fs.writeFileSync("./scraped_files/current_sales.json", salesStr);
+    fs.writeFileSync("../bots/GuildLife/scraped_files/current_sales.json", salesStr);
     console.log("Sales list extracted!");
     const closeProcess = browser.close();
     await closeProcess;
@@ -60,8 +59,8 @@ async function scrapePlayerCount(browser, page){
         Amount: plCountNo 
     };
     // Convert Object to string and output in a readable format, keeping it parsed to use
-    const plCountOut = JSON.parse(JSON.stringify(plCountObj, null, "\t"));
-    fs.writeFileSync("./scraped_files/player_count.json", plCountOut);
+    const plCountOut = JSON.stringify(plCountObj, null, "\t");
+    fs.writeFileSync("../bots/GuildLife/scraped_files/player_count.json", plCountOut);
     console.log("Got Player count!");
     // Once data is scraped, Navigate to next page! 
     await page.evaluate(() => {
@@ -81,7 +80,7 @@ async function accPage(browser, page){
     await page.evaluate(() => {
         document.querySelector('.bil_submenu_content a').click();
     });
-    await page.waitForNavigation();
+    await page.waitForSelector('.world_char');
     console.log("Changed page to: " + page.url());
     const playerCount = scrapePlayerCount(browser, page);
     await playerCount;
@@ -138,7 +137,7 @@ async function loginPage(browser, page){
 async function initBrowser() {
     try {
     // Initiate and launch browser - Set headless to true for a server!
-    const browser = await puppeteer.launch({headless: true, defaultViewport: null});
+    const browser = await puppeteer.launch({headless: true, defaultViewport: null, args: ['--no-sandbox']});
     // Open new tab
     const page = await browser.newPage();
     // init scraping
