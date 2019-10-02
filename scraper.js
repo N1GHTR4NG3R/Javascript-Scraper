@@ -27,6 +27,7 @@ async function marketPage(page){
 
 async function charPage(page){
     try {
+        await sleep(3000);
         // Nothing to use here just yet maybe in future - navigate to Trade page
         await page.evaluate(() => {
             // Most likely multiple items here - default to first - Will need to create an iteration for trade posts!
@@ -58,6 +59,7 @@ async function scrapePlayerCount(page){
         const plCountOut = JSON.stringify(plCountObj, null, "\t");
         fs.writeFileSync("../bots/GuildLife/scraped_files/player_count.json", plCountOut);
         console.log("Got Player count!");
+        await sleep(2500);
         // Once data is scraped, Navigate to next page! 
         await page.evaluate(() => {
             // If multiple elements here - defaults to first selector
@@ -74,6 +76,7 @@ async function accPage(page){
         console.log("Loading...");
         try {
         await page.waitFor('.bil_submenu_content');
+        await sleep(3500);
         await page.evaluate(() => {
             document.querySelector('.bil_submenu_content a').click();
         });
@@ -96,8 +99,11 @@ async function signIn(page){
                 await page.waitFor('input[name="email"]');
                 // Input data.
                 await page.type('input[name="email"]', `${email}`);
+                await sleep(1500);
                 await page.waitFor('input[name = "password"]');
+                await sleep(1400);
                 await page.type('input[name="password"]', `${password}`);
+                await sleep(500);
                 await page.evaluate(() => {
                     document.querySelector('.button-with-bg').click();
                 });
@@ -112,6 +118,10 @@ async function signIn(page){
     }
 }
 
+async function sleep(timerWait) {
+    return new Promise(resolve => setTimeout(resolve, timerWait));
+}
+
 async function loginPage(page){
     try {
         // Navigate to login page
@@ -124,6 +134,7 @@ async function loginPage(page){
 async function initBrowser() {
     try {
         // Initiate and launch browser - Set headless to true for a server!
+        // args: ['--no-sandbox'] - Needed in below params for Server!
         const browser = await puppeteer.launch({headless: true, defaultViewport: null, args: ['--no-sandbox']});
         // Open new tab
         const page = await browser.newPage();
@@ -146,9 +157,14 @@ async function initBrowser() {
         await markPage;
         const closeProcess = browser.close();
         await closeProcess;
+        console.log("Scraper Closed!");
     } catch (error) {
         console.error(error);
     }
 }
+function taskSchedule(){
+    const repeat = setInterval(() => initBrowser(), 600000);
+    repeat;
+}
 
-initBrowser();
+taskSchedule();
