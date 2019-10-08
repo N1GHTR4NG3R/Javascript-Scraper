@@ -24,7 +24,7 @@ You will need to input login details in the assets/settings.json file (Seen here
 
 File directories will need to be modified for your setup.
 
-You will need to install puppeteer.js and cheerio.js for this to work.
+You will need to install puppeteer.js, cheerio.js  and some dependencies found here: https://github.com/GoogleChrome/puppeteer/issues/3443 for this to work.
 
 If you would like it to display in a GUI so you can see what it does, remove `args: [ '--no-sandbox']` from the initbrowser function parameters, and also change `headless: true` to `headless: false`
 
