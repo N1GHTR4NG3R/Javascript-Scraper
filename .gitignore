@@ -1,4 +1,3 @@
 node_modules/*
-scraped_files/*
-assets/*
-marketData.js
+assets/settings.json
+

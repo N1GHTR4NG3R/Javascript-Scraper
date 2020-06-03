@@ -18,7 +18,7 @@ async function marketPage(page){
         const salesApi = await page.content();
         const $ = cheerio.load(salesApi);
         const salesStr = $('body > pre').text();
-        fs.writeFileSync("../bots/GuildLife/scraped_files/current_sales.json", salesStr);
+        fs.writeFileSync("../Bot/Data/market_sales.json", salesStr);
         console.log("Sales list extracted!");
     } catch (error) {
         console.error(error);
@@ -57,7 +57,7 @@ async function scrapePlayerCount(page){
         };
         // Convert Object to string
         const plCountOut = JSON.stringify(plCountObj, null, "\t");
-        fs.writeFileSync("../bots/GuildLife/scraped_files/player_count.json", plCountOut);
+        fs.writeFileSync("../Bot/Data/player_count.json", plCountOut);
         console.log("Got Player count!");
         await sleep(2500);
         // Once data is scraped, Navigate to next page! 
@@ -163,8 +163,8 @@ async function initBrowser() {
     }
 }
 function taskSchedule(){
-    const repeat = setInterval(() => initBrowser(), 600000);
+    const repeat = setInterval(() => initBrowser(), 1800000);
     repeat;
 }
 
-taskSchedule();
+initBrowser();
